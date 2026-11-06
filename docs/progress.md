@@ -93,3 +93,23 @@
 - Failure tested and diagnosis: Not applicable to this read-only preflight. Docker's Linux engine was already verified in the M0 daemon failure/recovery drill.
 - Blockers / questions: None for a local, controller-only Jenkins exercise. The existing Docker resources must be preserved.
 - Next checkpoint: Start one localhost-only Jenkins controller with a dedicated persistent volume; do not configure Docker-in-Docker, host-socket mounting, credentials, or cloud access.
+
+## 2026-11-06 — Milestone M1 / local Jenkins controller started
+
+- Goal: Run one local Jenkins controller with persistent home data and a localhost-only web binding.
+- Concepts learned: A Jenkins controller is the service that coordinates jobs and Pipeline execution. The Docker port mapping controls host exposure, while a Docker volume preserves Jenkins home data across container restarts.
+- Commands run:
+  - `docker volume create jenkins-lab-home`
+  - `docker run --name jenkins-lab --detach --publish 127.0.0.1:8080:8080 --volume jenkins-lab-home:/var/jenkins_home jenkins/jenkins:2.580.2-jdk21`
+  - `docker ps --filter "name=jenkins-lab"`
+  - Filtered Jenkins log readiness check for `Jenkins is fully up and running`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual):
+  - Container `jenkins-lab` (`c325c6c2908a`) is `Up` with image `jenkins/jenkins:2.580.2-jdk21`.
+  - The only published port shown is `127.0.0.1:8080->8080/tcp`.
+  - Jenkins logged `hudson.lifecycle.Lifecycle#onReady: Jenkins is fully up and running`.
+- Failure tested and diagnosis: A local agent-side `docker inspect` attempt was denied access to Docker's Windows named pipe. This did not affect the user-run Docker commands or the healthy container evidence. No Jenkins build failure drill has been performed yet.
+- Blockers / questions: Initial administrator setup and persistence-through-restart are unverified. The initial administrator password is a secret and must not be pasted into chat or committed.
+- Next checkpoint: Complete the local Jenkins first-run wizard at `http://127.0.0.1:8080` using the initial password only on the local machine, create a local administrator account, and select the minimum required plugins.
