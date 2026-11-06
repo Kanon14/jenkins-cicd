@@ -25,3 +25,18 @@
 - Failure tested and diagnosis: Stopping Docker Desktop made the Linux engine named pipe unavailable; restarting Docker Desktop restored the daemon.
 - Blockers / questions: None.
 - Next checkpoint: Draw the basic developer → GitHub → Jenkins → image → runtime learning diagram in `docs/architecture.md`.
+
+## 2026-11-06 — Milestone M0 / conceptual CI/CD flow
+
+- Goal: Capture the minimal developer → GitHub → Jenkins → image → runtime relationship before installing or configuring Jenkins.
+- Concepts learned: GitHub stores version-controlled application and pipeline definitions. Jenkins will later orchestrate testing and image builds; the Docker image is the deployable artifact, while the local runtime executes it.
+- Commands run:
+  - `git remote -v`
+- Files changed:
+  - `docs/architecture.md`
+- Verification results (actual):
+  - `docs/architecture.md` did not exist before this checkpoint and was then created.
+  - The configured `origin` remote is `https://github.com/Kanon14/jenkins-cicd.git` for fetch and push.
+- Failure tested and diagnosis: Not applicable to this static conceptual Markdown artifact. Visual Mermaid rendering has not yet been observed and remains a later manual preview check.
+- Blockers / questions: None.
+- Next checkpoint: Record the actual Windows and PowerShell version details, then assess M0 completion criteria.

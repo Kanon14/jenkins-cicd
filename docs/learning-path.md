@@ -288,7 +288,7 @@ jenkins-huawei-cicd-lab/
 
 | Milestone | Status | Evidence / link | Blockers | Last updated |
 |---|---|---|---|---|
-| M0 | In progress | See `progress.md` | — | 2026-11-06 |
+| M0 | In progress | See `progress.md` and `architecture.md` | — | 2026-11-06 |
 | M1 | Not started | — | — | 2026-11-05 |
 | M2 | Not started | — | — | 2026-11-05 |
 | M3 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M0 — Establish local development baseline**.
-**Next action:** Draw the basic developer → GitHub → Jenkins → image → runtime learning diagram and save it in `docs/architecture.md`.
+**Next action:** Record the actual Windows and PowerShell version details, then assess M0 completion criteria.
 
 ### Session journal template
 
