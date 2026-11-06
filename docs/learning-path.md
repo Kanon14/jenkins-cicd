@@ -1,9 +1,9 @@
 # Jenkins → Huawei Cloud CI/CD — Learning Path & Codex Project Guide
 
-> **Status:** Not started  
-> **Created:** 2026-11-05  
-> **Primary goal:** Learn Jenkins by building a reproducible, secure CI/CD workflow for a Python FastAPI service, then progress to Docker image promotion through **VSIT → SIT → UAT → PROD** using Huawei Cloud SWR and CCE where access is available.  
-> **Learning environment:** Windows, VS Code, Git/GitHub, Docker Desktop (WSL2), Python; Codex as a coding tutor and pair programmer.  
+> **Status:** Not started
+> **Created:** 2026-11-05
+> **Primary goal:** Learn Jenkins by building a reproducible, secure CI/CD workflow for a Python FastAPI service, then progress to Docker image promotion through **VSIT → SIT → UAT → PROD** using Huawei Cloud SWR and CCE where access is available.
+> **Learning environment:** Windows, VS Code, Git/GitHub, Docker Desktop (WSL2), Python; Codex as a coding tutor and pair programmer.
 > **Scope:** Personal sandbox and simulated enterprise environments only. **Do not connect to customer, employer, or production infrastructure without explicit authorization.**
 
 ---
@@ -299,8 +299,8 @@ jenkins-huawei-cicd-lab/
 | M8 | Not started | — | Requires authorized cloud access | 2026-11-05 |
 | M9 | Not started | — | — | 2026-11-05 |
 
-**Allowed statuses:** Not started / In progress / Completed / Blocked.  
-**Current milestone:** **M0 — Establish local development baseline**.  
+**Allowed statuses:** Not started / In progress / Completed / Blocked.
+**Current milestone:** **M0 — Establish local development baseline**.
 **Next action:** Run prerequisite version checks and `docker run --rm hello-world`; save actual output in `docs/progress.md`.
 
 ### Session journal template
