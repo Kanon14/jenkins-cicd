@@ -146,3 +146,20 @@
 - Failure tested and diagnosis: No new failure in this persistence check. The required Jenkins job failure drill is the next checkpoint.
 - Blockers / questions: None.
 - Next checkpoint: Create and run a local throwaway Freestyle job whose shell step intentionally exits with status `1`; inspect its console log and failed build status.
+
+## 2026-11-06 — Milestone M1 / Jenkins job failure drill and completion
+
+- Goal: Observe a failed Jenkins build and its console status in the local controller.
+- Concepts learned: A Jenkins Freestyle job can execute a shell build step. A non-zero shell exit status marks the build as failed, and the console log provides the direct evidence needed to diagnose that result.
+- Commands run in Jenkins:
+  - `echo "Intentional M1 failure drill"`
+  - `exit 1`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual):
+  - Local Freestyle job `m1-failure-drill` was run from Jenkins.
+  - Its console output ended with `Build step 'Execute shell' marked build as failure` and `Finished: FAILURE`.
+- Failure tested and diagnosis: Intentional `exit 1` made the Execute shell step fail, producing the expected Jenkins build status `FAILURE`.
+- Blockers / questions: The first-run wizard used suggested plugins instead of a minimum-plugin set; this is recorded as a local-lab scope deviation, not a blocker for M2.
+- Next checkpoint: Begin M2 by designing the smallest version-controlled Declarative `Jenkinsfile` that can be run from SCM.
