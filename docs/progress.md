@@ -178,3 +178,20 @@
 - Failure tested and diagnosis: The pre-creation path check returned `False`, proving this Pipeline definition is newly introduced. A Jenkins Pipeline failure drill remains planned after the successful SCM run.
 - Blockers / questions: The GitHub repository's unauthenticated SCM accessibility from Jenkins is unverified. If the repository is private, this checkpoint must stop before credentials are added.
 - Next checkpoint: Configure local Jenkins job `m2-first-pipeline` as Pipeline script from SCM, branch `*/main`, script path `Jenkinsfile`, then run the first build.
+
+## 2026-11-06 — Milestone M2 / SCM Pipeline success
+
+- Goal: Run the committed Declarative `Jenkinsfile` from the GitHub SCM repository in local Jenkins.
+- Concepts learned: A Pipeline-from-SCM job retrieves the version-controlled `Jenkinsfile` from its configured branch. The GitHub repository must contain the local commits before Jenkins can load that file.
+- Commands run:
+  - Local commits were pushed to GitHub by the user after the local Git environment's TLS trust problem prevented an agent-side push.
+  - The Jenkins job `m2-first-pipeline` was run against `main`.
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (user-reported):
+  - The Pipeline completed successfully from SCM after the repository was pushed.
+  - Local Git now reports `main...origin/main` with no ahead/behind marker, consistent with the push being synchronized.
+- Failure tested and diagnosis: The initial SCM run failed because GitHub's remote `main` did not yet contain `Jenkinsfile`; the local branch was 13 commits ahead. Pushing the commits resolved that specific SCM-file-not-found condition.
+- Blockers / questions: The Pipeline stage-by-stage console lines were not captured in the journal. The planned Pipeline failure drill remains required.
+- Next checkpoint: Create a temporary practice branch that changes only the Test stage to `exit 1`, push it, run the Jenkins job against that branch, verify the failure post message, then return the job to `main`.
