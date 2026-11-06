@@ -113,3 +113,19 @@
 - Failure tested and diagnosis: A local agent-side `docker inspect` attempt was denied access to Docker's Windows named pipe. This did not affect the user-run Docker commands or the healthy container evidence. No Jenkins build failure drill has been performed yet.
 - Blockers / questions: Initial administrator setup and persistence-through-restart are unverified. The initial administrator password is a secret and must not be pasted into chat or committed.
 - Next checkpoint: Complete the local Jenkins first-run wizard at `http://127.0.0.1:8080` using the initial password only on the local machine, create a local administrator account, and select the minimum required plugins.
+
+## 2026-11-06 — Milestone M1 / local first-run setup
+
+- Goal: Secure the local controller with a non-default administrator account and install the initial plugin set.
+- Concepts learned: Jenkins creates an initial administrator account during setup. Plugins extend Jenkins functionality, so the installed set should be known and reviewed rather than silently treated as part of Jenkins core.
+- Commands run: None reported. Setup was completed in the local Jenkins browser wizard.
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (user-reported):
+  - The local Jenkins first-run wizard was completed.
+  - A non-default local administrator account was created; its credentials were not shared or recorded.
+  - The user chose **Install suggested plugins**, rather than the previously proposed minimum-plugin selection.
+- Failure tested and diagnosis: Not applicable to the first-run browser setup. A Jenkins job failure drill remains required later in M1.
+- Blockers / questions: Persistence across restart and login after restart are unverified.
+- Next checkpoint: Restart `jenkins-lab`, wait for the readiness message, and confirm that the local administrator login still works.
