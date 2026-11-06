@@ -24,4 +24,4 @@
   - Docker Desktop was restarted and the user reported a verified successful recovery. The final command output was not captured in this journal.
 - Failure tested and diagnosis: Stopping Docker Desktop made the Linux engine named pipe unavailable; restarting Docker Desktop restored the daemon.
 - Blockers / questions: None.
-- Next checkpoint: Review the foundation pack, then continue M0 by keeping the repository documentation current before beginning M1.
+- Next checkpoint: Draw the basic developer → GitHub → Jenkins → image → runtime learning diagram in `docs/architecture.md`.
