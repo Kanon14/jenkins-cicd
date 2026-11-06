@@ -289,7 +289,7 @@ jenkins-huawei-cicd-lab/
 | Milestone | Status | Evidence / link | Blockers | Last updated |
 |---|---|---|---|---|
 | M0 | Completed | See `progress.md` and `architecture.md` | Mermaid visual preview remains unobserved | 2026-11-06 |
-| M1 | Not started | — | — | 2026-11-05 |
+| M1 | In progress | See `concepts.md` and `progress.md` | Linux-container mode and local resources unverified | 2026-11-06 |
 | M2 | Not started | — | — | 2026-11-05 |
 | M3 | Not started | — | — | 2026-11-05 |
 | M4 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M1 — Understand Jenkins and run it locally**.
-**Next action:** Read the official Jenkins Pipeline and Docker installation guides; record key concepts and questions before starting Jenkins.
+**Next action:** Inspect Docker's current operating system/type and available local resources without creating Jenkins resources.
 
 ### Session journal template
 

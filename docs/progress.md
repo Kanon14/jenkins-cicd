@@ -58,3 +58,17 @@
 - Failure tested and diagnosis: The M0 Docker daemon failure drill was previously completed and documented above; no additional failure was needed for this evidence-only completion assessment.
 - Blockers / questions: Mermaid visual rendering remains unobserved, but the diagram source is present and does not block M0's Docker-and-repository exit criterion.
 - Next checkpoint: Begin M1 by reading the official Jenkins Pipeline and Docker installation guides; do not start or expose Jenkins yet.
+
+## 2026-11-06 — Milestone M1 / official documentation study
+
+- Goal: Establish the Pipeline and Docker concepts needed before running a local Jenkins controller.
+- Concepts learned: Jenkins Pipeline models delivery work as code in a `Jenkinsfile`; Declarative Pipeline is the starting syntax for this lab. On Windows, the Jenkins Docker image requires Linux containers, and a persistent Jenkins home must be planned before the controller is started.
+- Commands run: None. This was a read-only documentation checkpoint.
+- Files changed:
+  - `docs/concepts.md`
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual): Official Jenkins Pipeline and Docker installation guidance were reviewed on 2026-11-06; source links and takeaways are recorded in `docs/concepts.md`.
+- Failure tested and diagnosis: Not applicable to this read-only study checkpoint; no Jenkins service or local infrastructure was started.
+- Blockers / questions: Docker Desktop Linux-container mode and local resource availability are not yet verified.
+- Next checkpoint: Inspect Docker's current operating system/type and available local resources without creating Jenkins resources.
