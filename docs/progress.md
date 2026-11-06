@@ -129,3 +129,20 @@
 - Failure tested and diagnosis: Not applicable to the first-run browser setup. A Jenkins job failure drill remains required later in M1.
 - Blockers / questions: Persistence across restart and login after restart are unverified.
 - Next checkpoint: Restart `jenkins-lab`, wait for the readiness message, and confirm that the local administrator login still works.
+
+## 2026-11-06 — Milestone M1 / restart persistence check
+
+- Goal: Confirm that the Jenkins home data and local administrator setup survive a controller restart.
+- Concepts learned: The Docker container is disposable runtime state, while the mounted Jenkins home volume preserves controller configuration, plugins, users, and jobs across restarts.
+- Commands run:
+  - `docker restart jenkins-lab`
+  - Filtered Jenkins log readiness check for `Jenkins is fully up and running`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (user-reported):
+  - Jenkins reached its readiness message after restart.
+  - The user successfully logged in with the existing local administrator account after restart.
+- Failure tested and diagnosis: No new failure in this persistence check. The required Jenkins job failure drill is the next checkpoint.
+- Blockers / questions: None.
+- Next checkpoint: Create and run a local throwaway Freestyle job whose shell step intentionally exits with status `1`; inspect its console log and failed build status.
