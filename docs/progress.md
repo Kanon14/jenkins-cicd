@@ -40,3 +40,21 @@
 - Failure tested and diagnosis: Not applicable to this static conceptual Markdown artifact. Visual Mermaid rendering has not yet been observed and remains a later manual preview check.
 - Blockers / questions: None.
 - Next checkpoint: Record the actual Windows and PowerShell version details, then assess M0 completion criteria.
+
+## 2026-11-06 — Milestone M0 / completion assessment
+
+- Goal: Confirm the host operating system and PowerShell details, then assess the M0 exit criterion.
+- Concepts learned: Windows PowerShell 5.1 is the shell used for the local lab commands. The M0 baseline establishes the developer machine, Git repository, Docker engine, and conceptual delivery flow before Jenkins is introduced.
+- Commands run:
+  - `$PSVersionTable.PSVersion`
+  - `(Get-CimInstance Win32_OperatingSystem).Caption`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual):
+  - PowerShell: Major `5`, Minor `1`, Build `26100`, Revision `9711`.
+  - Operating system: `Microsoft Windows 11 Home Single Language`.
+  - M0 exit criterion is met: Docker completed `hello-world`, the Docker stopped-daemon failure/recovery was observed, Git and Python versions were recorded, the GitHub remote and initial commit exist, and the conceptual CI/CD diagram is documented.
+- Failure tested and diagnosis: The M0 Docker daemon failure drill was previously completed and documented above; no additional failure was needed for this evidence-only completion assessment.
+- Blockers / questions: Mermaid visual rendering remains unobserved, but the diagram source is present and does not block M0's Docker-and-repository exit criterion.
+- Next checkpoint: Begin M1 by reading the official Jenkins Pipeline and Docker installation guides; do not start or expose Jenkins yet.
