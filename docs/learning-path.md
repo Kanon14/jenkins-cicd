@@ -290,7 +290,7 @@ jenkins-huawei-cicd-lab/
 |---|---|---|---|---|
 | M0 | Completed | See `progress.md` and `architecture.md` | Mermaid visual preview remains unobserved | 2026-11-06 |
 | M1 | Completed | See `concepts.md` and `progress.md`; controller, restart persistence, and failure drill verified | Suggested plugins were installed rather than a minimum set | 2026-11-06 |
-| M2 | In progress | M1 complete; begin `Jenkinsfile` design | — | 2026-11-06 |
+| M2 | In progress | Root `Jenkinsfile` created; SCM run pending | Unauthenticated SCM accessibility unverified | 2026-11-06 |
 | M3 | Not started | — | — | 2026-11-05 |
 | M4 | Not started | — | — | 2026-11-05 |
 | M5 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M2 — Jenkins Pipeline-as-Code**.
-**Next action:** Design the smallest version-controlled Declarative `Jenkinsfile` that can be run from SCM.
+**Next action:** Configure local Jenkins job `m2-first-pipeline` as Pipeline script from SCM, branch `*/main`, script path `Jenkinsfile`, then run the first build.
 
 ### Session journal template
 

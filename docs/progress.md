@@ -163,3 +163,18 @@
 - Failure tested and diagnosis: Intentional `exit 1` made the Execute shell step fail, producing the expected Jenkins build status `FAILURE`.
 - Blockers / questions: The first-run wizard used suggested plugins instead of a minimum-plugin set; this is recorded as a local-lab scope deviation, not a blocker for M2.
 - Next checkpoint: Begin M2 by designing the smallest version-controlled Declarative `Jenkinsfile` that can be run from SCM.
+
+## 2026-11-06 — Milestone M2 / first Jenkinsfile
+
+- Goal: Create the smallest version-controlled Declarative Pipeline definition for a Pipeline-from-SCM job.
+- Concepts learned: `skipDefaultCheckout(true)` prevents an implicit checkout so the Checkout stage remains visible and performs the single `checkout scm` action. A Declarative Pipeline uses `post` blocks to report result-specific behavior after its stages.
+- Commands run:
+  - `Test-Path Jenkinsfile` before creation, which returned `False`.
+- Files changed:
+  - `Jenkinsfile`
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (repository-side): The root-level `Jenkinsfile` defines `agent any`, explicit Checkout/Validate/Test stages, `checkout scm`, the workspace validation command, a harmless placeholder test, and success/failure/cleanup post messages. Jenkins SCM execution remains unverified.
+- Failure tested and diagnosis: The pre-creation path check returned `False`, proving this Pipeline definition is newly introduced. A Jenkins Pipeline failure drill remains planned after the successful SCM run.
+- Blockers / questions: The GitHub repository's unauthenticated SCM accessibility from Jenkins is unverified. If the repository is private, this checkpoint must stop before credentials are added.
+- Next checkpoint: Configure local Jenkins job `m2-first-pipeline` as Pipeline script from SCM, branch `*/main`, script path `Jenkinsfile`, then run the first build.
