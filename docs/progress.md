@@ -72,3 +72,24 @@
 - Failure tested and diagnosis: Not applicable to this read-only study checkpoint; no Jenkins service or local infrastructure was started.
 - Blockers / questions: Docker Desktop Linux-container mode and local resource availability are not yet verified.
 - Next checkpoint: Inspect Docker's current operating system/type and available local resources without creating Jenkins resources.
+
+## 2026-11-06 — Milestone M1 / Docker preflight
+
+- Goal: Confirm that Docker Desktop can run the Linux-based Jenkins image and that the local machine has reasonable capacity before creating any Jenkins resources.
+- Concepts learned: Docker Desktop can expose a Linux engine on Windows. Existing images, stopped containers, volumes, and build cache are local state; this lab must not delete or reclaim them unless explicitly requested.
+- Commands run:
+  - `docker version --format 'Server OS: {{.Server.Os}}/{{.Server.Arch}}'`
+  - `docker info --format 'OSType: {{.OSType}} | Docker: {{.OperatingSystem}} | CPUs: {{.NCPU}} | Memory bytes: {{.MemTotal}}'`
+  - `docker system df`
+  - `Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual):
+  - Docker server: `linux/amd64`; Docker type: `linux`; platform: `Docker Desktop`.
+  - Docker resources: `20` CPUs and `16,572,067,840` bytes of memory (approximately 15.4 GiB).
+  - Docker currently stores 17 images (5.419 GB), 10 inactive containers, 17 local volumes, and 53 build-cache entries. These pre-existing resources were not changed.
+  - The `C:` drive has `137,360,441,344` bytes free (approximately 127.9 GiB).
+- Failure tested and diagnosis: Not applicable to this read-only preflight. Docker's Linux engine was already verified in the M0 daemon failure/recovery drill.
+- Blockers / questions: None for a local, controller-only Jenkins exercise. The existing Docker resources must be preserved.
+- Next checkpoint: Start one localhost-only Jenkins controller with a dedicated persistent volume; do not configure Docker-in-Docker, host-socket mounting, credentials, or cloud access.
