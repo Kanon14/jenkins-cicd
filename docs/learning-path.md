@@ -291,7 +291,7 @@ jenkins-huawei-cicd-lab/
 | M0 | Completed | See `progress.md` and `architecture.md` | Mermaid visual preview remains unobserved | 2026-11-06 |
 | M1 | Completed | See `concepts.md` and `progress.md`; controller, restart persistence, and failure drill verified | Suggested plugins were installed rather than a minimum set | 2026-11-06 |
 | M2 | Completed | SCM success, isolated failure drill, and return to `main` verified | Detailed post-message lines not captured | 2026-11-10 |
-| M3 | In progress | M2 complete; begin FastAPI health-service design | — | 2026-11-10 |
+| M3 | In progress | Test-first FastAPI work started | Pip cannot validate PyPI TLS issuer in this environment | 2026-11-10 |
 | M4 | Not started | — | — | 2026-11-05 |
 | M5 | Not started | — | — | 2026-11-05 |
 | M6 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M3 — FastAPI application and automated CI**.
-**Next action:** Define the smallest FastAPI `/health` service and its pytest test before connecting it to Jenkins.
+**Next action:** Configure approved pip certificate/mirror access or install pinned dependencies from a trusted environment, then rerun the expected failing test before adding `app.main`.
 
 ### Session journal template
 

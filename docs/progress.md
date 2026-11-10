@@ -222,3 +222,22 @@
 - Failure tested and diagnosis: The M2 failure drill remained isolated on its temporary branch; the `main` success and failure evidence are both recorded above.
 - Blockers / questions: Detailed failure and cleanup post-message lines were not captured, but the Jenkins `FAILURE` result and return-to-main configuration were verified.
 - Next checkpoint: Begin M3 by defining the smallest FastAPI `/health` service and its pytest test before connecting it to Jenkins.
+
+## 2026-11-10 — Milestone M3 / dependency-installation blocker
+
+- Goal: Create the local Python environment required to run the FastAPI health-service test.
+- Commands run:
+  - `python -m venv .venv`
+  - `.\.venv\Scripts\python -m pip install -r requirements.txt`
+- Files changed:
+  - `requirements.txt` (uncommitted implementation work)
+  - `tests/test_health.py` (uncommitted test-first work)
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual):
+  - The virtual environment was created with Python 3.11 and pip 23.1.2.
+  - `pytest` is not installed, so the intended endpoint test cannot yet run.
+  - Pip could not retrieve `https://pypi.org/simple/fastapi/` because TLS certificate validation failed: `SSLCertVerificationError: unable to get local issuer certificate`.
+- Failure tested and diagnosis: The test command failed for the dependency-environment reason (`No module named pytest`), not for the intended missing-application reason. The underlying cause is untrusted TLS issuer configuration for PyPI access in this environment.
+- Blockers / questions: An approved corporate/root CA certificate or approved internal package mirror is required. Certificate verification must not be disabled and `--trusted-host` must not be used as a workaround.
+- Next checkpoint: Configure pip with approved certificate/mirror support or install the pinned dependencies from a trusted user environment, then rerun the expected failing test before adding `app.main`.
