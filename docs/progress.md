@@ -209,3 +209,16 @@
 - Failure tested and diagnosis: The deliberate `exit 1` in the Test stage produced the expected failed build result.
 - Blockers / questions: The Jenkins job's return to branch `*/main` is not yet confirmed. The failure and cleanup post-message lines were not captured, but the failed build status was observed.
 - Next checkpoint: Confirm that `m2-first-pipeline` is configured back to `*/main`, then M2 can be closed.
+
+## 2026-11-10 — Milestone M2 / completion assessment
+
+- Goal: Return the local Jenkins Pipeline job to the successful mainline configuration after the isolated failure drill.
+- Concepts learned: A Jenkins Pipeline job's branch specifier controls which version-controlled `Jenkinsfile` it loads. Returning the job to `main` restores the stable learning path without merging the intentional failure.
+- Commands run: None reported. The Jenkins job was updated through its local browser configuration.
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (user-reported): `m2-first-pipeline` was saved back on branch `*/main`.
+- Failure tested and diagnosis: The M2 failure drill remained isolated on its temporary branch; the `main` success and failure evidence are both recorded above.
+- Blockers / questions: Detailed failure and cleanup post-message lines were not captured, but the Jenkins `FAILURE` result and return-to-main configuration were verified.
+- Next checkpoint: Begin M3 by defining the smallest FastAPI `/health` service and its pytest test before connecting it to Jenkins.
