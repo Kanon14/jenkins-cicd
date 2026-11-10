@@ -195,3 +195,17 @@
 - Failure tested and diagnosis: The initial SCM run failed because GitHub's remote `main` did not yet contain `Jenkinsfile`; the local branch was 13 commits ahead. Pushing the commits resolved that specific SCM-file-not-found condition.
 - Blockers / questions: The Pipeline stage-by-stage console lines were not captured in the journal. The planned Pipeline failure drill remains required.
 - Next checkpoint: Create a temporary practice branch that changes only the Test stage to `exit 1`, push it, run the Jenkins job against that branch, verify the failure post message, then return the job to `main`.
+
+## 2026-11-10 — Milestone M2 / SCM Pipeline failure drill
+
+- Goal: Verify that an intentional non-zero exit in the version-controlled Pipeline produces a failed Jenkins build.
+- Concepts learned: A Pipeline's outcome is determined by the command exit status in its stage. Keeping the intentional failure on a temporary branch isolates the drill from `main`.
+- Commands run in the temporary practice branch:
+  - `echo "M2 intentional failure drill"; exit 1`
+- Files changed:
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (user-reported): The Jenkins Pipeline failure drill completed with `Finished: FAILURE`.
+- Failure tested and diagnosis: The deliberate `exit 1` in the Test stage produced the expected failed build result.
+- Blockers / questions: The Jenkins job's return to branch `*/main` is not yet confirmed. The failure and cleanup post-message lines were not captured, but the failed build status was observed.
+- Next checkpoint: Confirm that `m2-first-pipeline` is configured back to `*/main`, then M2 can be closed.
