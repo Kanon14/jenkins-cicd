@@ -251,8 +251,9 @@
 - Goal: Close the final M3 review findings after the user returned the Jenkins `main` build result.
 - Verification results (actual): The user reported `Finished: SUCCESS`. I inspected Jenkins build #12's console: it checked out `fa10855` from `origin/main`, ran on `python-test`, reported Python 3.11.4, passed `tests/test_health.py` (1 passed), and ended with `Finished: SUCCESS`. Jenkins' Built-In Node initially had 2 executors; I set the count to 0 and verified the node page reported `0 of 0 executor busy` and no projects tied to it.
 - Files changed: `Jenkinsfile` now performs an offline pip dry-run against the checked-out `requirements.txt` before pytest, so stale agent dependencies fail before tests; the M3 plan and this journal clarify the dependency check and secret handoff.
-- Not yet verified: The successful build predates the dependency guard. The updated Jenkinsfile must be pushed and a new `main` build must pass before M3 is fully closed.
-- Next checkpoint: Push the local M3 follow-up commit and run `m2-first-pipeline` on `main`; confirm the dependency preflight, pytest pass, and `Finished: SUCCESS`.
+- Final verification: Jenkins build #13 checked out `3a68cae` from `origin/main`, ran on `python-test`, passed the offline `pip install --dry-run --no-index --requirement requirements.txt` check with all pinned dependencies already satisfied, passed `tests/test_health.py` (1 passed), and ended with `Finished: SUCCESS`.
+- M3 exit criteria: Complete. The dedicated agent runs the test, dependencies are checked against the repository without network access, the intentional failure drill was rejected, and the controller has zero built-in executors.
+- Next checkpoint: Begin M4 by containerizing the FastAPI app and verifying `/health` from a local container.
 
 ## 2026-11-10 — Milestone M3 / dependency-installation blocker
 

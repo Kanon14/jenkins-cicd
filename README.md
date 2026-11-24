@@ -4,7 +4,7 @@ Personal, sandbox-only learning repository for building a secure, reproducible J
 
 ## Current status
 
-Milestone M3 (FastAPI CI on a dedicated Jenkins agent) is in final verification. A `main` build and the isolated failure drill passed their expected outcomes, and the Jenkins controller now has zero built-in executors. Push the latest M3 follow-up and confirm the offline dependency preflight in one more `main` build before beginning M4; see the progress journal for evidence.
+Milestone M3 (FastAPI CI on a dedicated Jenkins agent) is complete. Jenkins build #13 on `main` checked the pinned dependencies offline and passed the health test on `python-test`; the isolated failure drill produced the expected failure, and the Jenkins controller has zero built-in executors. The next milestone is M4: containerize and run the FastAPI app locally; see the progress journal for evidence.
 
 ## Start here
 

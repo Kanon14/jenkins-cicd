@@ -291,7 +291,7 @@ jenkins-huawei-cicd-lab/
 | M0 | Completed | See `progress.md` and `architecture.md` | Mermaid visual preview remains unobserved | 2026-11-06 |
 | M1 | Completed | See `concepts.md` and `progress.md`; controller, restart persistence, and failure drill verified | Suggested plugins were installed rather than a minimum set | 2026-11-06 |
 | M2 | Completed | SCM success, isolated failure drill, and return to `main` verified | Detailed post-message lines not captured | 2026-11-10 |
-| M3 | In progress | Prior `main` build passed on `python-test`; isolated failure drill produced `FAILURE`; controller executors now 0 | Push and pass the dependency preflight in a new `main` build | 2026-11-24 |
+| M3 | Completed | Build #13 on `main` checked pinned dependencies offline and passed the health test on `python-test`; isolated failure drill produced `FAILURE`; controller executors are 0 | None | 2026-11-24 |
 | M4 | Not started | — | — | 2026-11-05 |
 | M5 | Not started | — | — | 2026-11-05 |
 | M6 | Not started | — | — | 2026-11-05 |
@@ -300,8 +300,8 @@ jenkins-huawei-cicd-lab/
 | M9 | Not started | — | — | 2026-11-05 |
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
-**Current milestone:** **M3 — Final Jenkins agent verification**.
-**Next action:** Push the M3 follow-up commit and run the `main` Pipeline once more. After it passes, begin M4 by adding an application Dockerfile, building a local image, running it, and verifying `/health` from the container.
+**Current milestone:** **M4 — Containerize the FastAPI app**.
+**Next action:** Add an application Dockerfile, build a local image, run it, and verify the `/health` endpoint from the container.
 
 ### Session journal template
 
