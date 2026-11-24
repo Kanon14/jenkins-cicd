@@ -27,6 +27,7 @@
 - The agent container must not receive the Jenkins home volume or host Docker socket.
 - Jenkins must not schedule Python project code on the built-in controller node.
 - The Test stage must execute the exact pinned test dependencies and fail on a deliberately broken health assertion.
+- The Test stage must fail before pytest if the preinstalled agent dependencies do not satisfy the checked-out `requirements.txt`; the check must not access a package index.
 - The agent secret must be supplied without appearing in source files, shell history, or logs.
 
 ---
@@ -82,7 +83,7 @@ Set one executor, a separate remote root, label `python-test`, and inbound WebSo
 
 - [x] **Step 4: Start the agent without exposing the secret**
 
-Use a PowerShell secure prompt or a local-only environment variable that is not echoed or saved in the repository. Start the container attached only to the dedicated network, with a named isolated agent workspace volume. Set `JENKINS_URL` to the controller's container-network URL (for example `http://jenkins-lab:8080/` if that name resolves on the shared network), `JENKINS_AGENT_NAME=python-test`, and WebSocket mode.
+Use a PowerShell secure prompt (`Read-Host -AsSecureString`) and pass the value through a process-local environment variable; do not put the literal secret in a command, repository file, chat, or console output. Remove the process-local variable after the container starts. The value is present in the container environment and may be inspectable by users with access to the local Docker daemon. Start the container attached only to the dedicated network, with a named isolated agent workspace volume. Set `JENKINS_URL` to the controller's container-network URL (for example `http://jenkins-lab:8080/` if that name resolves on the shared network), `JENKINS_AGENT_NAME=python-test`, and WebSocket mode.
 
 - [x] **Step 5: Verify the agent is online and isolated**
 
@@ -96,12 +97,12 @@ Expected: Jenkins node page reports the agent online; Docker inspect shows the a
 - Modify: `docs/learning-path.md`
 
 **Interfaces:**
-- Consumes: online agent label `python-test` from Task 2 and root `tests/test_health.py`.
+- Consumes: online agent label `python-test` from Task 2, root `requirements.txt`, and `tests/test_health.py`.
 - Produces: Jenkins build evidence that pytest runs on the Python agent.
 
 - [x] **Step 1: Update the Jenkinsfile to use agent label `python-test`**
 
-Keep Checkout and Validate behavior. In Test, run `python --version` followed by `python -m pytest -v -W error::DeprecationWarning`.
+Keep Checkout and Validate behavior. In Test, run `python --version`, then `python -m pip install --dry-run --no-index --requirement requirements.txt` to ensure the image's preinstalled exact pins match the checked-out requirements without network access, followed by `python -m pytest -v -W error::DeprecationWarning`.
 
 - [x] **Step 2: Run the Pipeline from `main`**
 

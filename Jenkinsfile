@@ -23,6 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'python --version'
+                sh 'python -m pip install --dry-run --no-index --requirement requirements.txt'
                 sh 'python -m pytest -v -W error::DeprecationWarning'
             }
         }
