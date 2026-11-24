@@ -76,17 +76,17 @@ Run read-only Docker commands to list networks and inspect `jenkins-lab` attachm
 
 Create a named network for this lab and attach `jenkins-lab` to it. Verify the localhost host port remains `127.0.0.1:8080`.
 
-- [ ] **Step 3: Create permanent node `python-test` in Jenkins**
+- [x] **Step 3: Create permanent node `python-test` in Jenkins**
 
 Set one executor, a separate remote root, label `python-test`, and inbound WebSocket connection. Obtain the generated agent secret only through Jenkins' local UI.
 
-- [ ] **Step 4: Start the agent without exposing the secret**
+- [x] **Step 4: Start the agent without exposing the secret**
 
 Use a PowerShell secure prompt or a local-only environment variable that is not echoed or saved in the repository. Start the container attached only to the dedicated network, with a named isolated agent workspace volume. Set `JENKINS_URL` to the controller's container-network URL (for example `http://jenkins-lab:8080/` if that name resolves on the shared network), `JENKINS_AGENT_NAME=python-test`, and WebSocket mode.
 
-- [ ] **Step 5: Verify the agent is online and isolated**
+- [x] **Step 5: Verify the agent is online and isolated**
 
-Expected: Jenkins node page reports the agent online; Docker inspect shows only the dedicated network and agent workspace volume; the controller host port remains localhost-only.
+Expected: Jenkins node page reports the agent online; Docker inspect shows the agent only on the dedicated network, an isolated workspace volume, and no controller Jenkins home mount or host Docker socket; the official base image may also define its own `/home/jenkins/.jenkins` volume. The controller host port remains localhost-only.
 
 ### Task 3: Run the application test on the dedicated agent
 
@@ -99,18 +99,18 @@ Expected: Jenkins node page reports the agent online; Docker inspect shows only 
 - Consumes: online agent label `python-test` from Task 2 and root `tests/test_health.py`.
 - Produces: Jenkins build evidence that pytest runs on the Python agent.
 
-- [ ] **Step 1: Update the Jenkinsfile Test stage to use agent label `python-test`**
+- [x] **Step 1: Update the Jenkinsfile to use agent label `python-test`**
 
 Keep Checkout and Validate behavior. In Test, run `python --version` followed by `python -m pytest -v -W error::DeprecationWarning`.
 
-- [ ] **Step 2: Run the Pipeline from `main`**
+- [x] **Step 2: Run the Pipeline from `main`**
 
 Expected: Jenkins confirms the Test stage runs on `python-test` and reports one passing health test.
 
-- [ ] **Step 3: Verify the intentional failing-test drill on a temporary branch**
+- [x] **Step 3: Verify the intentional failing-test drill on a temporary branch**
 
 Temporarily change the expected health body in the test, run the job on an isolated practice branch, and confirm pytest fails and Jenkins marks the Pipeline failed. Restore the expected body and point the job back to `main`; do not merge the failure branch.
 
-- [ ] **Step 4: Record actual results and commit repository changes**
+- [x] **Step 4: Record actual results and commit repository changes** *(implementation commit `fa10855` was user-pushed; completion record is in a follow-up commit)*
 
 Record actual image, node, success-build, and isolated failure-build evidence. Commit the Dockerfile, Jenkinsfile, and tracker updates only after user verification of the Jenkins UI steps.

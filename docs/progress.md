@@ -225,23 +225,26 @@
 
 ## 2026-11-24 — Milestone M3 / dedicated Python agent image and network
 
-- Goal: Prepare the approved dedicated Jenkins Python agent and keep its controller connection private.
+- Goal: Run the FastAPI health test in Jenkins on a dedicated Python agent and verify both successful and failed CI outcomes.
 - Concepts learned: The agent connects to the controller through Docker's private-network DNS name and WebSocket over Jenkins HTTP; the controller does not need another published host port.
 - Commands run:
-  - `docker build -t jenkins-python-agent:3.11 -f infra/jenkins-agent/Dockerfile .` (user-run; successful image use confirmed below).
+  - `docker build -t jenkins-python-agent:3.11 -f infra/jenkins-agent/Dockerfile .` (user-run; subsequent image commands confirmed the build).
   - `docker run --rm --entrypoint python jenkins-python-agent:3.11 --version`
   - `docker run --rm --entrypoint python jenkins-python-agent:3.11 -m pip show fastapi httpx2 pytest`
   - `docker run --rm --entrypoint java jenkins-python-agent:3.11 -version`
   - `docker network create jenkins-agent-network`
   - `docker network connect jenkins-agent-network jenkins-lab`
+  - `git push origin main` (user-run after the local environment could not validate GitHub's TLS certificate).
+  - `git switch -c m3-failure-drill`
+  - `git push -u origin m3-failure-drill` (user-run).
+  - `git switch main`
+  - Jenkins job `m2-first-pipeline`: build on `main`, build on `m3-failure-drill`, return to `main`, and build again.
 - Files changed:
-  - `infra/jenkins-agent/Dockerfile`
-  - `docs/progress.md`
-  - `docs/learning-path.md`
-- Verification results (actual/user-reported): Python `3.11.4`; FastAPI `0.162.2`; HTTPX2 `2.15.0`; pytest `9.2.0`; OpenJDK `21.0.13.1`. Jenkins `2.580.2` is running on `jenkins-agent-network` at `172.20.0.2`, remains attached to its original `bridge` network, and still publishes only `127.0.0.1:8080` on the host.
+  - `.dockerignore`, `Jenkinsfile`, `README.md`, `app/`, `docs/learning-path.md`, `docs/progress.md`, `infra/jenkins-agent/Dockerfile`, `pyproject.toml`, `requirements.txt`, `src/`, `tests/`, and `uv.lock`.
+- Verification results (user-reported and observed): Local pytest passed one health test. The agent image contains Python `3.11.4`, FastAPI `0.162.2`, HTTPX2 `2.15.0`, pytest `9.2.0`, and OpenJDK `21.0.13.1`. Jenkins `2.580.2` runs on `jenkins-agent-network`, remains attached to its original `bridge` network, and publishes only `127.0.0.1:8080` on the host. Node `python-test` appeared in sync and the agent container reported `Up`. Docker inspection confirmed the agent uses only `jenkins-agent-network`, a separate named workspace volume, and the base image's own anonymous `/home/jenkins/.jenkins` volume; it does not mount the controller's `/var/jenkins_home`. The final Jenkins run on `main` ended `Finished: SUCCESS`. The isolated `m3-failure-drill` run ended `Finished: FAILURE`, and its console included the deliberate `status: deliberate-failure` assertion. The job and local checkout were returned to `main`, then a final successful build was run.
 - Failure tested and diagnosis: Docker API initially returned the missing `dockerDesktopLinuxEngine` named pipe because Docker Desktop's Linux engine was stopped. After Docker Desktop started, this execution environment required explicit Docker access approval; the image checks then succeeded.
-- Blockers / questions: Jenkins permanent node `python-test` and its inbound agent container have not yet been created. No agent secret has been handled or recorded.
-- Next checkpoint: Create `python-test` in the Jenkins UI with one executor, remote root `/home/jenkins/agent`, and WebSocket inbound mode; then start the agent on `jenkins-agent-network` without sharing the secret.
+- Blockers / questions: None for M3. The temporary failure branch is not merged; the Jenkins job and local checkout are on `main`.
+- Next checkpoint: Begin M4 by containerizing the FastAPI app and verifying `/health` from a local container.
 
 ## 2026-11-10 — Milestone M3 / dependency-installation blocker
 
