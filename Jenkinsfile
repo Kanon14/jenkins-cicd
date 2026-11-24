@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'python-test'
+    }
 
     options {
         skipDefaultCheckout(true)
@@ -20,20 +22,21 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'echo "M2 placeholder test passed"'
+                sh 'python --version'
+                sh 'python -m pytest -v -W error::DeprecationWarning'
             }
         }
     }
 
     post {
         success {
-            echo 'M2 pipeline completed successfully'
+            echo 'M3 pipeline completed successfully'
         }
         failure {
-            echo 'M2 pipeline failed; inspect the stage and console log'
+            echo 'M3 pipeline failed; inspect the stage and console log'
         }
         cleanup {
-            echo 'M2 pipeline cleanup complete'
+            echo 'M3 pipeline cleanup complete'
         }
     }
 }

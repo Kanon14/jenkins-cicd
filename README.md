@@ -4,7 +4,7 @@ Personal, sandbox-only learning repository for building a secure, reproducible J
 
 ## Current status
 
-Milestone M0 (local environment baseline) is in progress. The initial tool audit and Docker stop/recovery drill are recorded in the progress journal.
+Milestone M3 (FastAPI CI on a dedicated Jenkins agent) is in progress. The local health test passes, and the Python agent image and Jenkins node are configured; see the progress journal for evidence and the current checkpoint.
 
 ## Start here
 

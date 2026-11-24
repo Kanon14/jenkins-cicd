@@ -291,7 +291,7 @@ jenkins-huawei-cicd-lab/
 | M0 | Completed | See `progress.md` and `architecture.md` | Mermaid visual preview remains unobserved | 2026-11-06 |
 | M1 | Completed | See `concepts.md` and `progress.md`; controller, restart persistence, and failure drill verified | Suggested plugins were installed rather than a minimum set | 2026-11-06 |
 | M2 | Completed | SCM success, isolated failure drill, and return to `main` verified | Detailed post-message lines not captured | 2026-11-10 |
-| M3 | In progress | Test-first FastAPI work started | Pip cannot validate PyPI TLS issuer in this environment | 2026-11-10 |
+| M3 | In progress | Local FastAPI test passes; pinned Python agent image built and verified; Jenkins on private agent network | Create the `python-test` Jenkins node, connect its inbound agent, and run CI on it | 2026-11-24 |
 | M4 | Not started | — | — | 2026-11-05 |
 | M5 | Not started | — | — | 2026-11-05 |
 | M6 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M3 — FastAPI application and automated CI**.
-**Next action:** Configure approved pip certificate/mirror access or install pinned dependencies from a trusted environment, then rerun the expected failing test before adding `app.main`.
+**Next action:** Create the permanent Jenkins node labeled `python-test`, start the inbound agent over WebSocket on `jenkins-agent-network`, then route the Test stage to that node.
 
 ### Session journal template
 

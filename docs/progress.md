@@ -223,6 +223,26 @@
 - Blockers / questions: Detailed failure and cleanup post-message lines were not captured, but the Jenkins `FAILURE` result and return-to-main configuration were verified.
 - Next checkpoint: Begin M3 by defining the smallest FastAPI `/health` service and its pytest test before connecting it to Jenkins.
 
+## 2026-11-24 — Milestone M3 / dedicated Python agent image and network
+
+- Goal: Prepare the approved dedicated Jenkins Python agent and keep its controller connection private.
+- Concepts learned: The agent connects to the controller through Docker's private-network DNS name and WebSocket over Jenkins HTTP; the controller does not need another published host port.
+- Commands run:
+  - `docker build -t jenkins-python-agent:3.11 -f infra/jenkins-agent/Dockerfile .` (user-run; successful image use confirmed below).
+  - `docker run --rm --entrypoint python jenkins-python-agent:3.11 --version`
+  - `docker run --rm --entrypoint python jenkins-python-agent:3.11 -m pip show fastapi httpx2 pytest`
+  - `docker run --rm --entrypoint java jenkins-python-agent:3.11 -version`
+  - `docker network create jenkins-agent-network`
+  - `docker network connect jenkins-agent-network jenkins-lab`
+- Files changed:
+  - `infra/jenkins-agent/Dockerfile`
+  - `docs/progress.md`
+  - `docs/learning-path.md`
+- Verification results (actual/user-reported): Python `3.11.4`; FastAPI `0.162.2`; HTTPX2 `2.15.0`; pytest `9.2.0`; OpenJDK `21.0.13.1`. Jenkins `2.580.2` is running on `jenkins-agent-network` at `172.20.0.2`, remains attached to its original `bridge` network, and still publishes only `127.0.0.1:8080` on the host.
+- Failure tested and diagnosis: Docker API initially returned the missing `dockerDesktopLinuxEngine` named pipe because Docker Desktop's Linux engine was stopped. After Docker Desktop started, this execution environment required explicit Docker access approval; the image checks then succeeded.
+- Blockers / questions: Jenkins permanent node `python-test` and its inbound agent container have not yet been created. No agent secret has been handled or recorded.
+- Next checkpoint: Create `python-test` in the Jenkins UI with one executor, remote root `/home/jenkins/agent`, and WebSocket inbound mode; then start the agent on `jenkins-agent-network` without sharing the secret.
+
 ## 2026-11-10 — Milestone M3 / dependency-installation blocker
 
 - Goal: Create the local Python environment required to run the FastAPI health-service test.
