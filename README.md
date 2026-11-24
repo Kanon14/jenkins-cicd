@@ -4,7 +4,7 @@ Personal, sandbox-only learning repository for building a secure, reproducible J
 
 ## Current status
 
-Milestone M3 (FastAPI CI on a dedicated Jenkins agent) is complete. Jenkins build #13 on `main` checked the pinned dependencies offline and passed the health test on `python-test`; the isolated failure drill produced the expected failure, and the Jenkins controller has zero built-in executors. The next milestone is M4: containerize and run the FastAPI app locally; see the progress journal for evidence.
+Milestone M3 (FastAPI CI on a dedicated Jenkins agent) is complete. M4 is in progress: the FastAPI app now builds and runs locally in a non-root container, bound to localhost, and `/health` returns `{"status":"ok"}`. The next M4 checkpoint is to review a safe strategy for building the image from Jenkins; see the progress journal for evidence.
 
 ## Start here
 

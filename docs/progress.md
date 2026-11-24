@@ -273,3 +273,24 @@
 - Failure tested and diagnosis: The test command failed for the dependency-environment reason (`No module named pytest`), not for the intended missing-application reason. The underlying cause is untrusted TLS issuer configuration for PyPI access in this environment.
 - Blockers / questions: An approved corporate/root CA certificate or approved internal package mirror is required. Certificate verification must not be disabled and `--trusted-host` must not be used as a workaround.
 - Next checkpoint: Configure pip with approved certificate/mirror support or install the pinned dependencies from a trusted user environment, then rerun the expected failing test before adding `app.main`.
+
+## 2026-11-24 — M4 local FastAPI container
+
+- Goal: Package the existing FastAPI `/health` app as a local Docker image and verify it runs without root privileges.
+- Concepts learned: An ASGI server (Uvicorn) serves the FastAPI application; container port 8000 is published only on the host's loopback address; a numeric container user can run the service without root.
+- Commands run:
+  - `uv --system-certs add --no-sync "uvicorn==0.54.0"`
+  - `uv --system-certs lock --check`
+  - `docker build -t jenkins-python-agent:3.11 -f infra/jenkins-agent/Dockerfile .` (user-reported complete)
+  - `docker run --rm --entrypoint python jenkins-python-agent:3.11 -m pip show uvicorn` (user output: `0.54.0`)
+  - `docker build -t jenkins-cicd-app:0.1.0 .` (user-reported complete)
+  - `docker run --rm --detach --name jenkins-cicd-app --publish 127.0.0.1:8000:8000 jenkins-cicd-app:0.1.0`
+  - `docker ps --filter "name=jenkins-cicd-app" --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"`
+  - `docker exec jenkins-cicd-app id`
+  - `Invoke-RestMethod http://127.0.0.1:8000/health`
+  - `docker stop jenkins-cicd-app`
+- Files changed: `Dockerfile`, `pyproject.toml`, `requirements.txt`, `uv.lock`, M4 design/plan, this journal, and the learning tracker/README.
+- Verification results (user-reported): The app image build finished; the container was `Up` with `127.0.0.1:8000->8000/tcp`; `id` returned `uid=10001 gid=10001 groups=10001`; `/health` returned `{"status":"ok"}`; the temporary container was stopped. The rebuilt Jenkins agent contains Uvicorn `0.54.0` and Jenkins showed `python-test` connected.
+- Failure tested and diagnosis: No M4 failure drill yet. The local application container checkpoint passed; the separate Jenkins image-build stage has not been designed or implemented.
+- Blockers / questions: The Jenkins image-build stage needs a reviewed builder strategy because the current test agent has no Docker CLI or host socket.
+- Next checkpoint: Design the Jenkins image-build strategy before adding that stage; keep the Jenkins controller on localhost and avoid privileged mode or host-socket mounting.

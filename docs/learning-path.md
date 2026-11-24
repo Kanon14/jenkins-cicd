@@ -200,11 +200,11 @@ jenkins-huawei-cicd-lab/
 **Learn:** image layers, Dockerfile, build context, health endpoints, ports, container lifecycle, `.dockerignore`.
 
 **Tasks**
-- [ ] Write a minimal, reasonably secure Dockerfile for FastAPI.
-- [ ] Build a tagged image locally.
-- [ ] Run the container and call `/health`.
+- [x] Write a minimal, reasonably secure Dockerfile for FastAPI.
+- [x] Build a tagged image locally.
+- [x] Run the container and call `/health`.
 - [ ] Add a Jenkins stage to build the image using an explicitly reviewed build-agent strategy.
-- [ ] Ensure credentials and unnecessary files do not enter image layers.
+- [x] Ensure credentials and unnecessary files do not enter image layers: `.dockerignore` excludes secrets/caches and the Dockerfile copies only `requirements.txt` and `app/`.
 
 **Verify:** Rebuild from a clean checkout, run the container, and reach the endpoint. **Failure drill:** break the configured port or startup command, diagnose and fix.
 
@@ -292,7 +292,7 @@ jenkins-huawei-cicd-lab/
 | M1 | Completed | See `concepts.md` and `progress.md`; controller, restart persistence, and failure drill verified | Suggested plugins were installed rather than a minimum set | 2026-11-06 |
 | M2 | Completed | SCM success, isolated failure drill, and return to `main` verified | Detailed post-message lines not captured | 2026-11-10 |
 | M3 | Completed | Build #13 on `main` checked pinned dependencies offline and passed the health test on `python-test`; isolated failure drill produced `FAILURE`; controller executors are 0 | None | 2026-11-24 |
-| M4 | Not started | — | — | 2026-11-05 |
+| M4 | In progress | Local image built; container ran as UID/GID 10001, bound only to `127.0.0.1:8000`, and returned `{"status":"ok"}`; rebuilt `python-test` agent is connected | Review a safe Jenkins image-build agent strategy; Jenkins image-build stage remains | 2026-11-24 |
 | M5 | Not started | — | — | 2026-11-05 |
 | M6 | Not started | — | — | 2026-11-05 |
 | M7 | Not started | — | — | 2026-11-05 |
@@ -301,7 +301,7 @@ jenkins-huawei-cicd-lab/
 
 **Allowed statuses:** Not started / In progress / Completed / Blocked.
 **Current milestone:** **M4 — Containerize the FastAPI app**.
-**Next action:** Add an application Dockerfile, build a local image, run it, and verify the `/health` endpoint from the container.
+**Next action:** Review and design a safe Jenkins image-build strategy. The existing `python-test` agent has no Docker CLI or host socket, so do not add a build stage until its execution strategy is explicitly reviewed.
 
 ### Session journal template
 
