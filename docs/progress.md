@@ -294,3 +294,11 @@
 - Failure tested and diagnosis: No M4 failure drill yet. The local application container checkpoint passed; the separate Jenkins image-build stage has not been designed or implemented.
 - Blockers / questions: The Jenkins image-build stage needs a reviewed builder strategy because the current test agent has no Docker CLI or host socket.
 - Next checkpoint: Design the Jenkins image-build strategy before adding that stage; keep the Jenkins controller on localhost and avoid privileged mode or host-socket mounting.
+
+## 2026-11-24 — M4 review correction
+
+- Finding: The first `.dockerignore` patterns could miss secret-like files nested under `app/`, which the Dockerfile copies recursively.
+- Change: Made cache, environment-file, key, kubeconfig, Jenkins-data, and Git exclusions recursive with Docker's `**/` wildcard.
+- Verification: Rebuilt `jenkins-cicd-app:0.1.0` successfully with harmless nested `.env` and `.key` marker files in the build context. A Python check inside the image reported `Nested marker files present in image: []`; both temporary marker files were removed afterward. No real secrets were used.
+- Deferred minor: The earlier PowerShell health check recorded `{"status":"ok"}` but did not capture the HTTP status code. Capture both status and body on the next app run.
+- Next checkpoint: Review a safe Jenkins image-build strategy before adding the image-build stage.

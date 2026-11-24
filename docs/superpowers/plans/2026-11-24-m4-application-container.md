@@ -25,7 +25,7 @@
 ## Review Focus
 
 - **Dependency drift:** The rebuilt agent must include Uvicorn 0.54.0 so Jenkins' offline preflight passes; verify the installed version before replacing the running agent.
-- **Build context:** `.venv`, caches, secrets, and Jenkins data must remain excluded by `.dockerignore`; review the Dockerfile copies.
+- **Build context:** `.venv`, caches, secrets, and Jenkins data must remain excluded at every directory depth by `.dockerignore`; verify with harmless nested marker files and inspect the built image.
 - **ASGI target and port:** Startup must use `app.main:app` on `0.0.0.0:8000`; verify the container stays running and `/health` returns the expected JSON.
 - **Privileges:** The application process must not run as root; inspect `id` inside the running container.
 - **Host exposure:** The port mapping must bind to `127.0.0.1`; inspect the running container's published ports.
